@@ -1,0 +1,146 @@
+
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <br />
+
+        <form role="form" *ngIf="!mqttConnected">
+
+          <div class="form-group">
+            <label class="control-label">User-name</label>
+            <input [(ngModel)]="mqttUserName" class="form-control" placeholder="Enter your name">
+          </div>
+          <div class="form-group">
+            <label class="control-label">MQTT Host</label>
+            <input [(ngModel)]="mqttHost" class="form-control" placeholder="140.112.41.157">
+          </div>
+          <div class="form-group">
+            <label class="control-label">Port</label>
+            <input [(ngModel)]="mqttWebSocketPort" class="form-control" placeholder="9001">
+          </div>
+
+          <a class="btn btn-default" (click)="connectMQTTBroker()">Connect</a>
+
+        </form>
+
+        <div class="panel panel-default" *ngIf="mqttConnected">
+          <div class="panel-heading">
+            <h3 class="panel-title">UserName: <b>{{mqttUserName}}</b></h3>
+          </div>
+          <div class="panel-body">
+            <br />
+            <p>MQTT Host: {{mqttHost}}</p>
+            <p>Port: {{mqttWebSocketPort}}</p>
+          </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+        <form *ngIf="mqttConnected" >
+          <div class="form-group">
+            <label class="control-label">Subscribe/Unsubscribe a Group</label>
+            <input [(ngModel)]="mqttGroupTopic" class="form-control" placeholder="Subscribe a group">
+          </div>
+          <a class="btn btn-default" (click)="subscribeTopic()">Subscribe</a>
+          <a class="btn btn-default" (click)="unsubscribeTopic()">Unsubscribe</a>
+        </form>
+
+      </div>
+
+      <div class="col-md-8">
+          <chart [options]="options" (load)="saveInstance($event.context)" style="width: 55%"></chart>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="section" *ngIf="mqttConnected">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+
+        <h1 class="text-default">Users Online</h1>
+        <ul class="list-group text-left">
+          <li class="list-group-item" *ngFor="let user of mqttOnlineUsers">
+            <a class="btn btn-default" (click)="privateChat(user)"><i class="fa fa-fw fa-lg fa-pied-piper-alt"></i>Talk to : {{user}}</a>
+          </li>
+        </ul>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Subscribed Groups</h3>
+          </div>
+          <div class="panel-body" >
+            <h2 style="text-align: center" *ngFor="let eachGroup of mqttGroups">
+              <a class="btn btn-default btn-lg" (click)="groupChat(eachGroup)"><i class="fa fa-fw fa-lg fa-users"></i>Talk to group: {{eachGroup}}</a>
+            </h2>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <h1 class="text-default">MQTT Subscribed Topics</h1>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Subscribed Topics</h3>
+          </div>
+          <div class="panel-body">
+            <br />
+            <p *ngFor="let eachTopic of mqttSubscribedTopics">{{eachTopic}}</p>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <hr />
+    <br />
+
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-8">
+        <h1 style="text-align: center"> Talk to others here! </h1>
+        <div class="form-group">
+          <label class="control-label">MQTT Topic</label>
+          <input [(ngModel)]="mqttSendTopic" class="form-control" placeholder="Chatroom">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Message</label>
+          <input [(ngModel)]="mqttMessage" class="form-control" placeholder="Hello world!">
+        </div>
+        <a class="btn btn-default" (click)="sendMessage()">Send</a>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+
+    <hr />
+    <br />
+
+    <div class="row">
+      <div class="col-md-3" *ngFor="let chat of chatRoomName">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a class="btn btn-link" (click)="deleteChat(chat)">{{chat}}</a></h3>
+          </div>
+          <div class="panel-body">
+            <p *ngFor="let line of chatRoomContent[chat]">{{line}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

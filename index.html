@@ -1,0 +1,50 @@
+<html>
+
+<head>
+  <title>Angular2 MQTT Chatroom</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="ng2mqtt_chatroom.css" rel="stylesheet" type="text/css">
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- 1. Load libraries -->
+   <!-- Polyfill(s) for older browsers -->
+  <script src="node_modules/core-js/client/shim.min.js"></script>
+  <script src="node_modules/zone.js/dist/zone.js"></script>
+  <script src="node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <!-- 2. Configure SystemJS -->
+  <script src="systemjs.config.js"></script>
+  <script>
+    System.import('app').catch(function(err){ console.error(err); });
+  </script>
+
+  <script src="assets/js/mqttws31.min.js"></script>               <!-- 連結MQTT Broker的函式庫 -->
+  <script src="assets/js/Math.uuid.js"></script>                  <!-- 一個產生Unique ID的函式庫 -->
+  <script src="assets/js/sweetalert-dev.js"></script>                  <!-- 一個產生Unique ID的函式庫 -->
+  <link rel="stylesheet" href="assets/css/sweetalert.css">
+</head>
+
+<body>
+
+  <div class="section">
+    <div class="container">
+      <div class="text-center well">
+        <h1 class="text-primary">Angular2 MQTT Chatroom</h1>
+        <blockquote>
+          <p class="text-primary">Let's talk!</p>
+          <footer>Someone famous</footer>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+
+
+  <my-app>Loading...</my-app>
+
+</body>
+
+</html>
